@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Logo from "../assets/thelogo.png"
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css";
-//import { registerRoute } from "../utils/APIRoutes";
+import { registerRoute } from '../utils/APIRoutes';
 
 
 function Register() {
-  //const navigate = useNavigate();
+  const navigate = useNavigate()
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -38,27 +39,22 @@ function Register() {
     const { password, confirmPassword, username, email } = values;
     if (password !== confirmPassword) {
       toast.error(
-        "Password and confirm password should be the same!",
+        "Password and confirm password should be same.",
         toastOptions
       );
       return false;
-
     } else if (username.length < 3) {
       toast.error(
-        "Username should be greater than 3 characters!",
+        "Username should be greater than 3 characters.",
         toastOptions
       );
       return false;
-
-      //need to add that the password needs to be at least one big character 
-      //and at least one number/sign.
     } else if (password.length < 8) {
       toast.error(
-        "Password should be equal or greater than 8 characters!",
+        "Password should be equal or greater than 8 characters.",
         toastOptions
       );
       return false;
-
     } else if (email === "") {
       toast.error("Email is required.", toastOptions);
       return false;
@@ -67,42 +63,56 @@ function Register() {
     return true;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    handleValidation();
-  }
+    if (handleValidation()) {
+      const { email, username, password } = values;
+      const { data } = await axios.post(registerRoute, {
+        username,
+        email,
+        password,
+      });
+      if (data.status === false) {
+        toast.error(data.msg, toastOptions);
+      }
+      if (data.status === true) {
+        localStorage.setItem("chat-app-user", JSON.stringify(data.user));
+        navigate("/");
+      }
+    }
+  };
 
 
   return (<>
     <FormContainer>
-      <form onSubmit={(event) => handleSubmit(event)}>
+      <form action="" onSubmit={(event) => handleSubmit(event)}>
         <div className='brand'>
           <img src={Logo} alt="logo" />
           <h1>Floppie Chat</h1>
         </div>
         <input
           type="text"
-          placeholder='Username'
+          placeholder="Username"
           name="username"
-          onChange={e => handleChange(e)}
+          onChange={(e) => handleChange(e)}
         />
         <input
           type="email"
-          placeholder='Email'
+          placeholder="Email"
           name="email"
-          onChange={e => handleChange(e)}
+          onChange={(e) => handleChange(e)}
         />
         <input
           type="password"
-          placeholder='Password'
+          placeholder="Password"
           name="password"
-          onChange={e => handleChange(e)}
+          onChange={(e) => handleChange(e)}
         />
         <input
           type="password"
-          placeholder='Confirm Password'
-          name="ConfirmPassword"
-          onChange={e => handleChange(e)}
+          placeholder="Confirm Password"
+          name="confirmPassword"
+          onChange={(e) => handleChange(e)}
         />
         <button type="submit">Create User</button>
         <span>Already have an account?

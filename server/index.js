@@ -1,13 +1,14 @@
 const express = require("express");
-const cors = require("cors");
 const mongoose = require("mongoose");
+const userRoutes = require("./routes/userRoutes");
 
 
 const app = express();
-require("dotenv").config();
+require("dotenv").config({ path: `../.env` });
 
-app.use(cors());
-app.use(express.json());
+
+app.use("/api/auth", userRoutes)
+app.use(express.urlencoded({ extended: true }))
 
 //to provide the error in the terminal i have to set it to false first.
 mongoose.set("strictQuery", false);
