@@ -64,13 +64,14 @@ function Register() {
   };
 
   const handleSubmit = async (event) => {
+    console.log(values.username)
     event.preventDefault();
     if (handleValidation()) {
       const { email, username, password } = values;
       const { data } = await axios.post(registerRoute, {
-        username,
-        email,
-        password,
+        username: values.username,
+        email: values.email,
+        password: values.password,
       });
       if (data.status === false) {
         toast.error(data.msg, toastOptions);

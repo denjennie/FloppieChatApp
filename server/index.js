@@ -6,7 +6,7 @@ const userRoutes = require("./routes/userRoutes");
 const app = express();
 require("dotenv").config({ path: `../.env` });
 
-
+app.use(express.json())
 app.use("/api/auth", userRoutes)
 app.use(express.urlencoded({ extended: true }))
 
