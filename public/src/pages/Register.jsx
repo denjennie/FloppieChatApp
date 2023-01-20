@@ -24,11 +24,11 @@ function Register() {
     confirmPassword: "",
   });
 
-  /*  useEffect(() => {
-     if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-       navigate("/");
-     }
-   }, []); */
+  useEffect(() => {
+    if (localStorage.getItem('chat-app-user')) {
+      // navigate('/')
+    }
+  }, []);
 
 
   const handleChange = (event) => {
@@ -67,7 +67,7 @@ function Register() {
     console.log(values.username)
     event.preventDefault();
     if (handleValidation()) {
-      const { email, username, password } = values;
+      //const { email, username, password } = values;
       const { data } = await axios.post(registerRoute, {
         username: values.username,
         email: values.email,
