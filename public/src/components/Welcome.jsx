@@ -9,10 +9,11 @@ export default function Welcome(currentUser) {
   return (
     <Container>
       <img src={Robot} alt="Robot" />
-      <h1>
-        Welcome, <span>{currentUser.username}</span>!
-      </h1>
-      <h3>Please select a chat to start messaging.</h3>
+      <h2>
+        Welcome!
+      </h2>
+      <h3>Please select a </h3>
+      <h3>chat to start messaging</h3>
     </Container>
   );
 }
@@ -24,6 +25,7 @@ const Container = styled.div`
   color: white;
   flex-direction: column;
 img{
-  height: 20rem;
+  height: 10rem;
 }
+
 `;
