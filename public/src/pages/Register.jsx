@@ -26,7 +26,7 @@ function Register() {
 
   useEffect(() => {
     if (localStorage.getItem('chat-app-user')) {
-      // navigate('/')
+      navigate('/')
     }
   }, []);
 
@@ -37,6 +37,7 @@ function Register() {
   }
   const handleValidation = () => {
     const { password, confirmPassword, username, email } = values;
+
     if (password !== confirmPassword) {
       toast.error(
         "Password and confirm password should be same.",
@@ -55,11 +56,20 @@ function Register() {
         toastOptions
       );
       return false;
-    } else if (email === "") {
+    }
+    else if (!password.match(/^(?=.*[\d!#$%&? "])(?=.*[A-Z])[a-zA-Z0-9!#$%&?]{8,}/
+    )
+    ) {
+      toast.error(
+        "Password should include at least one capital letter, number or a symbol.",
+        toastOptions
+      );
+      return false;
+    }
+    else if (email === "") {
       toast.error("Email is required.", toastOptions);
       return false;
     }
-
     return true;
   };
 

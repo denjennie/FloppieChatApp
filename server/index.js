@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes");
+const messagesRoute = require("./routes/messagesRoute");
 
 
 const app = express();
@@ -8,6 +9,8 @@ require("dotenv").config({ path: `../.env` });
 
 app.use(express.json())
 app.use("/api/auth", userRoutes)
+app.use("/api/messages", messagesRoute)
+
 app.use(express.urlencoded({ extended: true }))
 
 //to provide the error in the terminal i have to set it to false first.
