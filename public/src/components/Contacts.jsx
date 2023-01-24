@@ -7,7 +7,6 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined)
   useEffect(() => {
-    console.log("UseEffect och contacts", contacts)
     if (currentUser) {
       setCurrentUserName(currentUser.username);
     }

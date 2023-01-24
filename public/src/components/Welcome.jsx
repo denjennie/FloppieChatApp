@@ -5,14 +5,14 @@ import Robot from "../assets/robot.gif"
 
 
 export default function Welcome(currentUser) {
-
+  console.log(currentUser)
   return (
     <Container>
       <img src={Robot} alt="Robot" />
       <h1>
-        Welcome!
+        Welcome, <span>{currentUser.username}</span>!
       </h1>
-      <h3>Please select a chat to Start messaging.</h3>
+      <h3>Please select a chat to start messaging.</h3>
     </Container>
   );
 }
