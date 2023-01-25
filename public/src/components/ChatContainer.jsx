@@ -11,7 +11,6 @@ export default function ChatContainer({ currentChat, currentUser }) {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    console.log(currentUser)
     const messageEffect = async () => {
       if (currentChat) {
         const response = await axios.post(getAllMessagesRoute, {

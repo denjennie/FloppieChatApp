@@ -19,7 +19,6 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
 
   return <>
     {
-
       <Container>
         <div className="brand">
           <img src={Logo} alt="logo" />
@@ -38,8 +37,6 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
               </div>
             )
           })}
-
-
         </div>
         <div className="current-user">
           <div className="username">
@@ -47,7 +44,6 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
           </div>
         </div>
       </Container>
-
     }
   </>
 
@@ -99,7 +95,6 @@ const Container = styled.div`
     
       .username {
         h3 {
-          
           color: white;
         }
       }
@@ -119,7 +114,6 @@ const Container = styled.div`
     .username {
       h2 {
         font-size: 1rem;
-    
         color: white;
       }
     }

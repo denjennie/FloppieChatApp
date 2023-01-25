@@ -4,8 +4,7 @@ import Robot from "../assets/robot.gif"
 
 
 
-export default function Welcome(currentUser) {
-  console.log(currentUser)
+export default function Welcome() {
   return (
     <Container>
       <img src={Robot} alt="Robot" />

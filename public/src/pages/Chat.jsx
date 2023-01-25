@@ -7,8 +7,8 @@ import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
 import ChatContainer from '../components/ChatContainer';
 
-
 function Chat() {
+
   const navigate = useNavigate();
   const [contacts, setContacts] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -19,28 +19,19 @@ function Chat() {
     const chatEffect = async () => {
       if (!localStorage.getItem("chat-app-user")) {
         navigate("/login");
+
       } else {
-        setCurrentUser(await JSON.parse(localStorage.getItem("chat-app-user")))
+        let user = JSON.parse(localStorage.getItem("chat-app-user"));
+        setCurrentUser(user);
         setIsLoaded(true);
+        await axios.get(`${allUsersRoute}/${user._id}`).then((res) => {
+          setContacts(res.data);
+        }).catch((err) => console.log(err))
       }
     }
     chatEffect();
   }, [])
 
-  useEffect(() => {
-    const currentUserEffect = async () => {
-      if (currentUser) {
-        await axios.get(`${allUsersRoute}/${currentUser._id}`).then((res) => {
-          console.log(res.data)
-          setContacts(res.data);
-        }).catch((err) => console.log(err))
-
-      } else {
-        navigate("/");
-      }
-    }
-    currentUserEffect();
-  }, [currentUser])
 
   const handleChatChange = (chat) => {
     setCurrentChat(chat)

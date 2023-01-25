@@ -21,7 +21,6 @@ function Login() {
   const [values, setValues] = useState({
     username: "",
     password: "",
-
   });
 
   useEffect(() => {
@@ -32,7 +31,6 @@ function Login() {
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value })
-
   }
   const handleValidation = () => {
     const { password, username, } = values;
