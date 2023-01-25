@@ -17,6 +17,10 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
     changeChat(contact);
   };
 
+  const newChat = () => {
+    alert("Lägg till chat")
+  }
+
   return <>
     {
       <Container>
@@ -25,6 +29,8 @@ export default function Contacts({ contacts, currentUser, changeChat }) {
           <h3>Floppie Chat</h3>
         </div>
         <div className="contacts">
+          <div onClick={() => newChat()} className='start-chat'>Start a new chat +</div>
+
           {contacts.map((contact, index) => {
             return (
               <div
@@ -66,6 +72,10 @@ const Container = styled.div`
       color: white;
       text-transform: uppercase;
     }
+  }
+  .start-chat{
+      color: white;
+      cursor: pointer;
   }
   .contacts {
     display: flex;
