@@ -10,19 +10,54 @@ export default function ChatContainer({ currentChat, currentUser }) {
 
   const [messages, setMessages] = useState([]);
 
+  const startSSE = () => {
+    let sse = new EventSource('/api/sse')
+
+    sse.addEventListener('connect', message => {
+      let data = JSON.parse(message.data)
+      console.log('[connect]', data);
+    })
+
+    sse.addEventListener('disconnect', message => {
+      let data = JSON.parse(message.data)
+      console.log('[disconnect]', data);
+    })
+
+    sse.addEventListener('new-message', message => {
+      let data = JSON.parse(message.data)
+      console.log('[new-message]', data);
+      messages.push(data)
+      setMessages([...messages])
+    })
+  }
+
   useEffect(() => {
-    const messageEffect = async () => {
+    startSSE()
+  }, [])
+  
+  const messageEffect = async () => {
       if (currentChat) {
-        const response = await axios.post(getAllMessagesRoute, {
+        const response = await axios.get(getAllMessagesRoute, {
           from: currentUser._id,
           to: currentChat._id,
         });
         setMessages(response.data);
       }
-    }
+    /* let messageDiv = document.querySelector('.chat-messages');
+    messageDiv.scrollTop = messageDiv.scrollHeight; */
+  }
+  
+
+ /*  useEffect(() => {
+    let interval = setInterval(messageEffect, 300);
+    return () => clearInterval(interval);
+  }, []); */
+
+  useEffect(() => {
     messageEffect();
   }, [currentChat])
 
+  useEffect(()=>console.log(messages),[messages])
 
   const handleSendMsg = async (msg) => {
     await axios.post(sendMessageRoute, {
@@ -48,24 +83,26 @@ export default function ChatContainer({ currentChat, currentUser }) {
           <Logout />
         </div>
         <div className="chat-messages">
-          {messages.map((message) => {
-            return (
-              <div key={uuidv4()}>
-                <div className={`message ${message.fromSelf ? "sended" : "recieved"}`}>
-                  <div className="content">
-                    <p>{message.message}</p>
-                  </div>
-                </div>
-              </div>
-            )
-          })
-          }
+          {messages.map((message) => <MessageBubble message={message} />)}
         </div>
         <ChatInput handleSendMsg={handleSendMsg} />
       </Container>
     )}
-
   </>
+
+  function MessageBubble({ message }) {
+    console.log("create message bubble with data: ", message)
+    const isSender = message.sender === currentUser._id
+    console.log('is sender of message: ', isSender)
+  return <div key={uuidv4()}>
+                <div className={`message ${isSender ? "sended" : "recieved"}`}>
+                  <div className="content">
+                    <p>{message.message.text}</p>
+                  </div>
+                </div>
+              </div>
+}
+  
 }
 
 

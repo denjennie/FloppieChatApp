@@ -8,7 +8,6 @@ import Welcome from "../components/Welcome";
 import ChatContainer from '../components/ChatContainer';
 
 function Chat() {
-
   const navigate = useNavigate();
   const [contacts, setContacts] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -50,7 +49,6 @@ function Chat() {
 
       </div>
     </Container>
-
   );
 }
 
